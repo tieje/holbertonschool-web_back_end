@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 '''10. Duck typing - first element of a sequence'''
 def safe_first_element(lst):
     if lst:
