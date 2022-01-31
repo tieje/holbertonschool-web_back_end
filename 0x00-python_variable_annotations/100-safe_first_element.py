@@ -1,3 +1,7 @@
 #!/usr/bin/python3
-
-if __name__ == "__main__":
+'''10. Duck typing - first element of a sequence'''
+def safe_first_element(lst):
+    if lst:
+        return lst[0]
+    else:
+        return None

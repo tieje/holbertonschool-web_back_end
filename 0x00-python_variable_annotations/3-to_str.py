@@ -1,3 +1,7 @@
 #!/usr/bin/python3
+'''3. Basic annotations - to string'''
 
-if __name__ == "__main__":
+
+def to_str(n: float) -> str:
+    '''Turn float into string'''
+    return(str(n))

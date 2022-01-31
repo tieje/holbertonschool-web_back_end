@@ -1,3 +1,10 @@
 #!/usr/bin/python3
+'''9. Let's duck type an iterable object'''
 
-if __name__ == "__main__":
+
+from typing import List, Tuple
+
+item = tuple[str, float]
+def element_length(lst: List[str]) -> List[Tuple[str, float]]:
+    '''Return list of tuples of (item, item length)'''
+    return [(i, len(i)) for i in lst]
