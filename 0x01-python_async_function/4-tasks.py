@@ -3,7 +3,7 @@
 from typing import Callable, List
 import asyncio
 
-task_wait_random: Callable = __import__('4-tasks').task_wait_random
+task_wait_random: Callable = __import__('3-tasks').task_wait_random
 
 
 async def task_wait_n(n: int, max_delay: int) -> List[float]:
