@@ -8,7 +8,7 @@ async_comprehension: Callable = __import__(
     '1-async_comprehension').async_comprehension
 
 
-async def measure_runtime():
+async def measure_runtime() -> float:
     '''Run for four parallel comprehensions in 10 seconds'''
     start: float = perf_counter()
     await asyncio.gather(
