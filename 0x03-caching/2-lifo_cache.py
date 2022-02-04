@@ -3,6 +3,7 @@
 from base_caching import BaseCaching
 from typing import List, Union
 
+
 class LIFOCache(BaseCaching):
     '''LIFO Caching'''
 
@@ -16,14 +17,13 @@ class LIFOCache(BaseCaching):
         Assign cache key to value
         If max items is reached, the last item put in will be removed.
         '''
-        if BaseCaching.checkArgsIsNone(key, item):
-            return
         if len(self.cache_data) >= self.MAX_ITEMS and key not in self.__Order:
             LastKey: str = self.__Order.pop()
             del self.cache_data[LastKey]
             print('DISCARD: ' + LastKey)
-        self.__Order.append(key)
-        self.cache_data[key] = item
+        if key and item:
+            self.__Order.append(key)
+            self.cache_data[key] = item
 
     def get(self, key: str) -> Union[str, None]:
         '''Get value of key from cache dict'''
