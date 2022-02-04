@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 '''0. Basic dictionary'''
 from base_caching import BaseCaching
-
+from typing import Union
 
 class BasicCache(BaseCaching):
     '''Basic Cache'''
@@ -11,8 +11,8 @@ class BasicCache(BaseCaching):
         if key and item:
             self.cache_data[key] = item
 
-    def get(self, key: str) -> str:
+    def get(self, key: str) -> Union[str, None]:
         '''Get value of key from cache dict'''
-        if BaseCaching.checkArgsIsNone(key) or key not in self.cache_data:
-            return 'None'
+        if not key or key not in self.cache_data:
+            return None
         return self.cache_data[key]
