@@ -33,15 +33,3 @@ class BaseCaching():
         """
         raise NotImplementedError(
             "get must be implemented in your cache class")
-
-    @ staticmethod
-    def checkArgsIsNone(*args) -> bool:
-        '''
-        Check if args is None.
-        If args is None return True.
-        If args is not None return False.
-        '''
-        for i in args:
-            if i is None:
-                return True
-        return False

@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 '''3. LRU Caching'''
 from base_caching import BaseCaching
+from typing import List, Union
 
 
 class MRUCache(BaseCaching):
@@ -9,28 +10,27 @@ class MRUCache(BaseCaching):
     def __init__(self):
         '''Add input Order to keep track of order'''
         super().__init__()
-        self.__inputOrder = []
+        self.__Order: List[str] = []
 
     def put(self, key: str, item: str) -> None:
         '''
         Assign cache key to value
         If max items is reached, the most recently used item will be removed.
         '''
-        if BaseCaching.checkArgsIsNone(key, item):
-            return
-        if len(self.cache_data) >= self.MAX_ITEMS and key not in self.__inputOrder:
-            FirstKey: str = self.__inputOrder[0]
+        if len(self.cache_data) >= self.MAX_ITEMS and key not in self.__Order:
+            FirstKey: str = self.__Order[0]
             del self.cache_data[FirstKey]
             print('DISCARD: ' + FirstKey)
-        if key in self.__inputOrder:
-            self.__inputOrder.remove(key)
-        self.__inputOrder.insert(0, key)
-        self.cache_data[key] = item
+        if key and item:
+            if key in self.__Order:
+                self.__Order.remove(key)
+            self.__Order.insert(0, key)
+            self.cache_data[key] = item
 
-    def get(self, key: str) -> str:
+    def get(self, key: str) -> Union[str, None]:
         '''Get value of key from cache dict'''
-        if BaseCaching.checkArgsIsNone(key) or key not in self.cache_data:
-            return 'None'
-        self.__inputOrder.remove(key)
-        self.__inputOrder.insert(0, key)
+        if not key or key not in self.cache_data:
+            return None
+        self.__Order.remove(key)
+        self.__Order.insert(0, key)
         return self.cache_data[key]
