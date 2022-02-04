@@ -28,13 +28,13 @@ class BaseCaching():
         raise NotImplementedError(
             "put must be implemented in your cache class")
 
-    def get(self, key):
-        """ Get an item by key
-        """
-        raise NotImplementedError(
-            "get must be implemented in your cache class")
+    def get(self, key: str) -> str:
+        '''Get value of key from cache dict'''
+        if BaseCaching.checkArgsIsNone(key) or not self.cache_data.__contains__(key):
+            return 'None'
+        return self.cache_data[key]
 
-    @staticmethod
+    @ staticmethod
     def checkArgsIsNone(*args) -> bool:
         '''
         Check if args is None.
