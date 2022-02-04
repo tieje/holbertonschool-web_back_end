@@ -3,6 +3,7 @@
 from base_caching import BaseCaching
 from typing import Union
 
+
 class BasicCache(BaseCaching):
     '''Basic Cache'''
 
