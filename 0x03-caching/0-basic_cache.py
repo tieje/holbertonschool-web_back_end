@@ -8,9 +8,8 @@ class BasicCache(BaseCaching):
 
     def put(self, key: str, item: str) -> None:
         '''Add item to cache dict if key and item are defined'''
-        if BaseCaching.checkArgsIsNone(key, item):
-            return
-        self.cache_data[key] = item
+        if key and item:
+            self.cache_data[key] = item
 
     def get(self, key: str) -> str:
         '''Get value of key from cache dict'''
