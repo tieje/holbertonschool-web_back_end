@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 '''1. Simple pagination'''
 import csv
-import math
 from typing import List, Tuple
 
 
@@ -27,11 +26,11 @@ class Server:
         '''Return rows of data from csv'''
         assert type(page) is int and type(page_size) is int
         assert page > 0 and page_size > 0
-        pageRange: Tuple[(int, int)] = self.index_range(page, page_size)
+        pRange: Tuple[(int, int)] = self.index_range(page, page_size)
         dataset: List[List] = self.dataset()
-        if pageRange[1] > len(dataset):
+        if pRange[1] > len(dataset):
             return []
-        return [list(dataset[row]) for row in range(pageRange[0], pageRange[1])]
+        return [list(dataset[row]) for row in range(pRange[0], pRange[1])]
 
     @staticmethod
     def index_range(page: int, page_size: int) -> Tuple[(int, int)]:
