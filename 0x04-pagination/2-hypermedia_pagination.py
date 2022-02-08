@@ -2,18 +2,7 @@
 '''2. Hypermedia pagination mandatory'''
 import csv
 import math
-from optparse import Option
-from typing import List, Optional, Tuple, TypedDict
-
-
-class HyperType(TypedDict, total=False):
-    '''Return Dict type for get_hyper() method'''
-    page: int
-    page_size: int
-    data: Optional[List[List]]
-    next_page: Optional[int]
-    prev_page: Optional[int]
-    total_pages: int
+from typing import Dict, List, Optional, Tuple
 
 
 class Server:
@@ -44,7 +33,7 @@ class Server:
             return []
         return [list(dataset[row]) for row in range(pRange[0], pRange[1])]
 
-    def get_hyper(self, page: int = 1, page_size: int = 10) -> HyperType:
+    def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict:
         '''Return Dictionary of type HyperType'''
         # assertion for variable checking
         assert type(page) is int and type(page_size) is int
