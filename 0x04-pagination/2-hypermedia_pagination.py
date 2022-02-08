@@ -38,11 +38,11 @@ class Server:
         '''Return rows of data from csv'''
         assert type(page) is int and type(page_size) is int
         assert page > 0 and page_size > 0
-        pageRange: Tuple[(int, int)] = self.index_range(page, page_size)
+        pRange: Tuple[(int, int)] = self.index_range(page, page_size)
         dataset: List[List] = self.dataset()
-        if pageRange[1] > len(dataset):
+        if pRange[1] > len(dataset):
             return []
-        return [list(dataset[row]) for row in range(pageRange[0], pageRange[1])]
+        return [list(dataset[row]) for row in range(pRange[0], pRange[1])]
 
     def get_hyper(self, page: int = 1, page_size: int = 10) -> HyperType:
         '''Return Dictionary of type HyperType'''
@@ -50,7 +50,7 @@ class Server:
         assert type(page) is int and type(page_size) is int
         assert page > 0 and page_size > 0
         # initializing variables
-        pageRange: Tuple[(int, int)] = self.index_range(page, page_size)
+        pRange: Tuple[(int, int)] = self.index_range(page, page_size)
         dataSet: List[List] = self.dataset()
         totalRows: int = len(dataSet)
         totalPages: int = math.ceil(totalRows / page_size)
@@ -59,9 +59,9 @@ class Server:
         prevPage: Optional[int] = None
         pageSize: int = 0
         # variable mutation depending if statements
-        if pageRange[1] < totalRows:
+        if pRange[1] < totalRows:
             pageSet = [list(dataSet[row])
-                       for row in range(pageRange[0], pageRange[1])]
+                       for row in range(pRange[0], pRange[1])]
         if page <= totalPages:
             pageSize = page_size
         if page < totalPages:
