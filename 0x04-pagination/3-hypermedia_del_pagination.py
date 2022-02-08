@@ -62,7 +62,6 @@ class Server:
                 nextIndex = i[0]
                 break
             if counter >= index:
-                print(i[0])
                 pageDataSet.append(i[1])
                 rows += 1
             counter += 1
