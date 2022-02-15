@@ -3,6 +3,7 @@
 Route module for the API
 """
 from api.v1.auth.auth import Auth
+from api.v1.auth.basic_auth import BasicAuth
 from os import getenv
 from typing import List
 from api.v1.views import app_views
@@ -13,10 +14,14 @@ from flask_cors import (CORS, cross_origin)
 app = Flask(__name__)
 app.register_blueprint(app_views)
 CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
-auth = None
+auth_type = getenv("AUTH_TYPE")
 
-if getenv("AUTH_TYPE") == "auth":
+if auth_type == "auth":
     auth = Auth()
+elif auth_type == "basic_auth":
+    auth = BasicAuth()
+else:
+    auth = None
 
 
 @app.errorhandler(404)
