@@ -18,7 +18,7 @@ class Auth:
         ]
         if any(bool_list):
             return True
-        path = path.rstrip('/')
+        path = path.rstrip('/*')
         excluded_paths = [
             i.rstrip('/') if type(i) == str else i for i in excluded_paths
         ]
