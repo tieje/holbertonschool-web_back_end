@@ -5,6 +5,9 @@ from typing import List
 import unittest
 filter_datum = __import__('filtered_logger').filter_datum
 RedactingFormatter = __import__('filtered_logger').RedactingFormatter
+get_logger = __import__('filtered_logger').get_logger
+get_db = __import__('filtered_logger').get_db
+PII_FIELDS = __import__('filtered_logger').PII_FIELDS
 
 
 class TestFilterDatum(unittest.TestCase):
@@ -48,5 +51,30 @@ class TestRedactedFormat(unittest.TestCase):
 
     def test_format_second_part(self):
         '''Test the append of log'''
+        # removed spaces to fit what actually occurs
         answer2: str = 'name=Bob;email=***;ssn=***;password=***;'
         self.assertTrue(answer2 in self.testThis)
+
+
+class Testget_logger(unittest.TestCase):
+    '''test get_logger()'''
+
+    def test_PII_FIELDS(self):
+        '''test PII_FIELDS'''
+        self.assertEqual(len(PII_FIELDS), 5)
+
+    def test_get_logger_Return_Type(self):
+        '''test Return type'''
+        self.assertEqual(
+            str(get_logger.__annotations__.get('return')),
+            "<class 'logging.Logger'>")
+
+
+class Testget_db(unittest.TestCase):
+    '''test get_db()'''
+
+    def test_get_db_Return_Type(self):
+        '''test return type of get_db()'''
+        self.assertEqual(
+            str(get_db.__annotations__.get('return')),
+            "<class 'mysql.connector.connection.MySQLConnection'>")
