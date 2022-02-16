@@ -4,6 +4,7 @@ Route module for the API
 """
 from api.v1.auth.auth import Auth
 from api.v1.auth.basic_auth import BasicAuth
+from api.v1.auth.session_auth import SessionAuth
 from os import getenv
 from typing import List
 from api.v1.views import app_views
@@ -21,6 +22,8 @@ if auth_type == "auth":
     auth = Auth()
 elif auth_type == "basic_auth":
     auth = BasicAuth()
+elif auth_type == "session_auth":
+    auth = SessionAuth()
 
 
 @app.errorhandler(404)
@@ -57,6 +60,7 @@ def before_request():
         if not auth.current_user(request):
             print('made it to 403')
             abort(403)
+        request.current_user = auth.current_user(request)
 
 
 if __name__ == "__main__":

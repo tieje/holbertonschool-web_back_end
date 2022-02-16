@@ -1,0 +1,29 @@
+task 0
+
+API_HOST=0.0.0.0 API_PORT=5000 AUTH_TYPE=basic_auth ./main_0.py 
+
+API_HOST=0.0.0.0 API_PORT=5000 AUTH_TYPE=basic_auth python3 -m api.v1.app
+
+curl "http://0.0.0.0:5000/api/v1/users" -H "Authorization: Basic Ym9iQGhidG4uaW86SDBsYmVydG9uU2Nob29sOTgh"
+curl "http://0.0.0.0:5000/api/v1/users/me" -H "Authorization: Basic Ym9iQGhidG4uaW86SDBsYmVydG9uU2Nob29sOTgh"
+
+curl "http://0.0.0.0:5000/api/v1/users/03040342-e384-405e-8839-44e230a0f8ba" -H "Authorization: Basic Ym9iQGhidG4uaW86SDBsYmVydG9uU2Nob29sOTgh"
+
+task 1
+API_HOST=0.0.0.0 API_PORT=5000 AUTH_TYPE=session_auth python3 -m api.v1.app
+curl "http://0.0.0.0:5000/api/v1/status" && /
+curl "http://0.0.0.0:5000/api/v1/status/" && /
+curl "http://0.0.0.0:5000/api/v1/users" && /
+curl "http://0.0.0.0:5000/api/v1/users" -H "Authorization: Test"
+
+task 2
+API_HOST=0.0.0.0 API_PORT=5000 AUTH_TYPE=session_auth ./main_1.py
+
+task 3
+API_HOST=0.0.0.0 API_PORT=5000 AUTH_TYPE=session_auth ./main_2.py 
+
+task 4
+curl "http://0.0.0.0:5000"
+curl "http://0.0.0.0:5000" --cookie "_my_session_id=Hello"
+curl "http://0.0.0.0:5000" --cookie "_my_session_id=C is fun"
+curl "http://0.0.0.0:5000" --cookie "_my_session_id_fake"
