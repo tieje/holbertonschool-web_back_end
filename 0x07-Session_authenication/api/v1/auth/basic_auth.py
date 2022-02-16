@@ -11,7 +11,8 @@ from models.user import User
 class BasicAuth(Auth):
     '''Basic authentication'''
 
-    def extract_base64_authorization_header(self, authorization_header: str) -> str:
+    def extract_base64_authorization_header(
+            self, authorization_header: str) -> str:
         '''Return the basic auth part of the auth header
         auth header should look like the following string:
         Authorization: Basic YWxhZGRpbjpvcGVuc2VzYW1l
@@ -27,7 +28,8 @@ class BasicAuth(Auth):
             return None
         return auth_list[1]
 
-    def decode_base64_authorization_header(self, base64_authorization_header: str) -> str:
+    def decode_base64_authorization_header(
+            self, base64_authorization_header: str) -> str:
         '''Return decoded base64 string'''
         bool_list: List[bool] = [
             base64_authorization_header is None,
@@ -37,27 +39,30 @@ class BasicAuth(Auth):
             return None
         try:
             header_decoded: bytes = b64decode(base64_authorization_header)
-        except:
+        except Exception:
             return None
         return header_decoded.decode('utf-8')
 
-    def extract_user_credentials(self, decoded_base64_authorization_header: str) -> (str, str):
+    def extract_user_credentials(
+            self, decoded_base64_authorization_header: str) -> (str, str):
         '''Return username, password'''
         bool_list: List[bool] = [
             decoded_base64_authorization_header is None,
             type(decoded_base64_authorization_header) != str,
         ]
+        short = decoded_base64_authorization_header
         if any(bool_list):
             return None, None
         if ':' not in decoded_base64_authorization_header:
             return None, None
         username_password = [
-            i.strip(' ') for i in decoded_base64_authorization_header.split(':', 1)]
+            i.strip(' ') for i in short.split(':', 1)]
         username = username_password[0]
         password = username_password[1]
         return username, password
 
-    def user_object_from_credentials(self, user_email: str, user_pwd: str) -> TypeVar('User'):
+    def user_object_from_credentials(
+            self, user_email: str, user_pwd: str) -> TypeVar('User'):
         '''Return user with matching credentials'''
         if user_email is None or type(user_email) != str:
             return None
@@ -65,7 +70,7 @@ class BasicAuth(Auth):
             return None
         try:
             users = User.search({'email': user_email})
-        except:
+        except Exception:
             return None
         for user in users:
             if user.is_valid_password(user_pwd):
