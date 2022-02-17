@@ -1,46 +1,47 @@
 #!/usr/bin/env python3
-'''Session authentication'''
+'''Session Auth class'''
+
 from api.v1.auth.auth import Auth
+import uuid
 from models.user import User
-from typing import Dict, TypeVar
-from uuid import uuid4
 
 
 class SessionAuth(Auth):
-    '''Session Authentication'''
-    user_id_by_session_id: Dict = {}
+    '''self descriptive'''
+    user_id_by_session_id = {}
 
     def create_session(self, user_id: str = None) -> str:
-        '''Return Session ID'''
-        if user_id is None or type(user_id) != str:
+        '''self descriptive'''
+        if not user_id or not isinstance(user_id, str):
             return None
-        session_id = str(uuid4())
+        session_id = str(uuid.uuid4())
         self.user_id_by_session_id[session_id] = user_id
         return session_id
 
     def user_id_for_session_id(self, session_id: str = None) -> str:
-        '''Return User Id based on session ID'''
-        if session_id is None or type(session_id) != str:
-            return None
-        return self.user_id_by_session_id.get(session_id)
+        '''self descriptive'''
+        if session_id and isinstance(session_id, str):
+            return self.user_id_by_session_id.get(session_id)
+        return None
 
-    def current_user(self, request=None) -> TypeVar('User'):
-        '''Return User instance from session Id cookie'''
+    def current_user(self, request=None):
+        '''self descriptive'''
         session_cookie = self.session_cookie(request)
-        user_id = self.user_id_by_session_id.get(session_cookie)
-        return User.get(user_id)
+        session_id = self.user_id_for_session_id(session_cookie)
+        return User.get(session_id)
 
     def destroy_session(self, request=None):
-        if request is None:
+        '''self descriptive'''
+        if not request:
             return False
-        session_id = self.session_cookie(request)
-        if not session_id:
+        session_cookie = self.session_cookie(request)
+
+        if not session_cookie:
             return False
-        try:
-            user_id = self.user_id_by_session_id[session_id]
-        except Exception:
-            return False
+
+        user_id = self.user_id_for_session_id(session_cookie)
+
         if not user_id:
             return False
-        del self.user_id_by_session_id[session_id]
+        self.user_id_by_session_id.pop(session_cookie)
         return True

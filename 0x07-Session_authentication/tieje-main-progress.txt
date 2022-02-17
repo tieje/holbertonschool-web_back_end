@@ -42,12 +42,11 @@ API_HOST=0.0.0.0 API_PORT=5000 AUTH_TYPE=session_auth SESSION_NAME=_my_session_i
 
 curl "http://0.0.0.0:5000/" && /
 curl "http://0.0.0.0:5000/" --cookie "_my_session_id=Holberton" && /
-curl "http://0.0.0.0:5000/" --cookie "_my_session_id=ef0955cd-d6b8-4a0a-9bae-eade08db183d"
+curl "http://0.0.0.0:5000/" --cookie "_my_session_id=5de4d486-ee91-4035-895f-4cc6ea52ce79"
 
 task 7
 API_HOST=0.0.0.0 API_PORT=5000 AUTH_TYPE=session_auth SESSION_NAME=_my_session_id python3 -m api.v1.app
 
-curl "http://0.0.0.0:5000/api/v1/auth_session/login" -XGET && /
 curl "http://0.0.0.0:5000/api/v1/auth_session/login" -XPOST && /
 curl "http://0.0.0.0:5000/api/v1/auth_session/login" -XPOST -d "email=guillaume@hbtn.io" && /
 curl "http://0.0.0.0:5000/api/v1/auth_session/login" -XPOST -d "email=guillaume@hbtn.io" -d "password=test" && /
@@ -55,13 +54,22 @@ curl "http://0.0.0.0:5000/api/v1/auth_session/login" -XPOST -d "email=bobsession
 curl "http://0.0.0.0:5000/api/v1/auth_session/login" -XPOST -d "email=bobsession@hbtn.io" -d "password=fake pwd" && /
 curl "http://0.0.0.0:5000/api/v1/auth_session/login" -XPOST -d "email=bobsession@hbtn.io" -d "password=fake pwd" -vvv
 
-curl "http://0.0.0.0:5000/api/v1/users/me" --cookie "_my_session_id=df05b4e1-d117-444c-a0cc-ba0d167889c4
+curl "http://0.0.0.0:5000/api/v1/users/me" --cookie "_my_session_id=b59894c4-8d21-4de3-9e2d-2c4b46d5889e"
+
+
 
 task 8
 API_HOST=0.0.0.0 API_PORT=5000 AUTH_TYPE=session_auth SESSION_NAME=_my_session_id python3 -m api.v1.app
 
 curl "http://0.0.0.0:5000/api/v1/auth_session/login" -XPOST -d "email=bobsession@hbtn.io" -d "password=fake pwd" -vvv && /
-curl "http://0.0.0.0:5000/api/v1/users/me" --cookie "_my_session_id=e173cb79-d3fc-4e3a-9e6f-bcd345b24721" && /
-curl "http://0.0.0.0:5000/api/v1/auth_session/logout" --cookie "_my_session_id=e173cb79-d3fc-4e3a-9e6f-bcd345b24721" && /
-curl "http://0.0.0.0:5000/api/v1/auth_session/logout" --cookie "_my_session_id=e173cb79-d3fc-4e3a-9e6f-bcd345b24721" -XDELETE && /
-curl "http://0.0.0.0:5000/api/v1/users/me" --cookie "_my_session_id=e173cb79-d3fc-4e3a-9e6f-bcd345b24721"
+curl "http://0.0.0.0:5000/api/v1/users/me" --cookie "_my_session_id=07101d0f-d0a3-48f8-a3ad-df2c5570ad3e" && /
+curl "http://0.0.0.0:5000/api/v1/auth_session/logout" --cookie "_my_session_id=07101d0f-d0a3-48f8-a3ad-df2c5570ad3e" && /
+curl "http://0.0.0.0:5000/api/v1/auth_session/logout" --cookie "_my_session_id=07101d0f-d0a3-48f8-a3ad-df2c5570ad3e" -XDELETE && /
+curl "http://0.0.0.0:5000/api/v1/users/me" --cookie "_my_session_id=07101d0f-d0a3-48f8-a3ad-df2c5570ad3e"
+
+curl "http://0.0.0.0:5000/api/v1/auth_session/login" -XPOST -d "email=bobsession@hbtn.io" -d "password=fake pwd" -vvv
+
+curl "http://0.0.0.0:5000/api/v1/users/me" --cookie "_my_session_id=18009157-753e-44b3-8878-e323f8b57f5d"
+curl "http://0.0.0.0:5000/api/v1/auth_session/logout" --cookie "_my_session_id=18009157-753e-44b3-8878-e323f8b57f5d"
+curl "http://0.0.0.0:5000/api/v1/auth_session/logout" --cookie "_my_session_id=18009157-753e-44b3-8878-e323f8b57f5d" -XDELETE
+curl "http://0.0.0.0:5000/api/v1/users/me" --cookie "_my_session_id=18009157-753e-44b3-8878-e323f8b57f5d"
