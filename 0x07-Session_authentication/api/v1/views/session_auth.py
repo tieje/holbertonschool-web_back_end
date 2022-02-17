@@ -18,9 +18,8 @@ def login():
         return jsonify({"error": "password missing"}), 400
     if user_password is None or user_password == '':
         return jsonify({"error": "password missing"}), 400
-    try:
-        users = User.search({'email': user_email})
-    except Exception:
+    users = User.search({'email': user_email})
+    if not users:
         return jsonify({"error": "no user found for this email"}), 404
     active_user = None
     for user in users:
@@ -32,5 +31,5 @@ def login():
     from api.v1.app import auth
     session_id = auth.create_session(active_user.id)
     json_user = jsonify(active_user.to_json())
-    json_user.set_cookie(getenv('SESSION_NAME'), session_id)
+    auth.user_id_by_session_id[getenv('SESSION_NAME')] = session_id
     return json_user

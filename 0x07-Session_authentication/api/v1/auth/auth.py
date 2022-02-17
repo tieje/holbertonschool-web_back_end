@@ -2,7 +2,6 @@
 """
 Auth module for the API
 """
-from flask import request
 from typing import List, TypeVar
 from os import getenv
 
