@@ -33,3 +33,14 @@ def login():
     json_user = jsonify(active_user.to_json())
     auth.user_id_by_session_id[getenv('SESSION_NAME')] = session_id
     return json_user
+
+
+@app_views.route('/auth_session/logout',
+                 methods=['DELETE'],
+                 strict_slashes=False)
+def logout():
+    '''logout functionality'''
+    from api.v1.app import auth
+    if auth.destroy_session(request):
+        return jsonify({}), 200
+    return abort(404)
