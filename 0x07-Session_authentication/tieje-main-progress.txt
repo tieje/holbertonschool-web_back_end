@@ -27,3 +27,32 @@ curl "http://0.0.0.0:5000"
 curl "http://0.0.0.0:5000" --cookie "_my_session_id=Hello"
 curl "http://0.0.0.0:5000" --cookie "_my_session_id=C is fun"
 curl "http://0.0.0.0:5000" --cookie "_my_session_id_fake"
+
+task 5
+API_HOST=0.0.0.0 API_PORT=5000 AUTH_TYPE=session_auth SESSION_NAME=_my_session_id python3 -m api.v1.app
+
+curl "http://0.0.0.0:5000/api/v1/status" && /
+curl "http://0.0.0.0:5000/api/v1/auth_session/login" && /
+curl "http://0.0.0.0:5000/api/v1/users/me" && /
+curl "http://0.0.0.0:5000/api/v1/users/me" -H "Authorization: Basic Ym9iQGhidG4uaW86SDBsYmVydG9uU2Nob29sOTgh" && /
+curl "http://0.0.0.0:5000/api/v1/users/me" --cookie "_my_session_id=5535d4d7-3d77-4d06-8281-495dc3acfe76"
+
+task 6
+API_HOST=0.0.0.0 API_PORT=5000 AUTH_TYPE=session_auth SESSION_NAME=_my_session_id ./main_4.py
+
+curl "http://0.0.0.0:5000/" && /
+curl "http://0.0.0.0:5000/" --cookie "_my_session_id=Holberton" && /
+curl "http://0.0.0.0:5000/" --cookie "_my_session_id=ef0955cd-d6b8-4a0a-9bae-eade08db183d"
+
+task 7
+API_HOST=0.0.0.0 API_PORT=5000 AUTH_TYPE=session_auth SESSION_NAME=_my_session_id python3 -m api.v1.app
+
+curl "http://0.0.0.0:5000/api/v1/auth_session/login" -XGET && /
+curl "http://0.0.0.0:5000/api/v1/auth_session/login" -XPOST && /
+curl "http://0.0.0.0:5000/api/v1/auth_session/login" -XPOST -d "email=guillaume@hbtn.io" && /
+curl "http://0.0.0.0:5000/api/v1/auth_session/login" -XPOST -d "email=guillaume@hbtn.io" -d "password=test" && /
+curl "http://0.0.0.0:5000/api/v1/auth_session/login" -XPOST -d "email=bobsession@hbtn.io" -d "password=test" && /
+curl "http://0.0.0.0:5000/api/v1/auth_session/login" -XPOST -d "email=bobsession@hbtn.io" -d "password=fake pwd" && /
+curl "http://0.0.0.0:5000/api/v1/auth_session/login" -XPOST -d "email=bobsession@hbtn.io" -d "password=fake pwd" -vvv
+
+curl "http://0.0.0.0:5000/api/v1/users/me" --cookie "_my_session_id=df05b4e1-d117-444c-a0cc-ba0d167889c4
