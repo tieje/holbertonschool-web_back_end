@@ -39,18 +39,19 @@ class DB:
         self._session.commit()
         return new_user
 
-    def find_user_by(self, **users) -> User:
+    def find_user_by(self, **kwargs) -> User:
         '''Returns first row found in users table
         about User'''
         try:
-            record = self.__session.query(User).filter_by(**users).first()
-        except:
+            record = self.__session.query(User).filter_by(**kwargs).first()
+        except TypeError:
             raise InvalidRequestError
         if record is None:
             raise NoResultFound
         return record
 
     def update_user(self, user_id, **kwargs) -> None:
+        '''Updates user info'''
         record = self.find_user_by(id=user_id)
         for key, value in kwargs.items():
             if hasattr(record, key):
