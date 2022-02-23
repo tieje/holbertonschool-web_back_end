@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 '''basic flask app to return a json payload'''
-from urllib import request
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, abort
 from auth import Auth
+
 app = Flask(__name__)
 AUTH = Auth()
 
@@ -28,6 +28,23 @@ def users() -> str:
         return jsonify({
             'message': 'email already registered'
         }), 400
+
+
+@app.route('/sessions', methods=['POST'], strict_slashes=False)
+def login() -> str:
+    '''Log into app'''
+    email = request.form.get('email')
+    password = request.form.get('password')
+    valid_login = AUTH.valid_login(email, password)
+
+    if valid_login:
+        session_id = AUTH.create_session(email)
+        message = {"email": email, "message": "logged in"}
+        response = jsonify(message)
+        response.set_cookie('session_id', session_id)
+        return response
+    else:
+        abort(401)
 
 
 if __name__ == "__main__":
