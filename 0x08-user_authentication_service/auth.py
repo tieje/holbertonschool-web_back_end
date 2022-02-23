@@ -7,7 +7,7 @@ from sqlalchemy.orm.exc import NoResultFound
 
 
 def _hash_password(password: str) -> bytes:
-    return hashpw(password, gensalt())
+    return hashpw(password.encode('utf-8'), gensalt())
 
 
 class Auth:
@@ -21,6 +21,6 @@ class Auth:
         '''Return user object'''
         try:
             self._db.find_user_by(email=email)
+            raise ValueError('User ' + email + ' already exists')
         except NoResultFound:
             return self._db.add_user(email, str(_hash_password(password)))
-        raise ValueError('User ' + email + ' already exists')
