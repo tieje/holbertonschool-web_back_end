@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 '''Auth module'''
+from os import register_at_fork
 from db import DB
 from bcrypt import hashpw, gensalt, checkpw
 from user import User
@@ -62,3 +63,28 @@ class Auth:
         '''Destroy session'''
         if user_id:
             self._db.update_user(user_id, session_id=None)
+
+    def get_reset_password_token(self, email: str) -> str:
+        '''Reset password token if user exists'''
+        try:
+            user = self._db.find_user_by(email=email)
+        except NoResultFound:
+            raise ValueError
+        token = _generate_uuid()
+        self._db.update_user(user.id, reset_token=token)
+        return token
+
+    def update_password(self, reset_token: str, password: str) -> None:
+        """ self descriptive update password """
+        if not reset_token or not password:
+            return None
+        try:
+            user = self._db.find_user_by(reset_token=reset_token)
+        except NoResultFound:
+            raise ValueError
+
+        hashed_pwd = _hash_password(password)
+        self._db.update_user(
+            user.id,
+            hashed_password=hashed_pwd,
+            reset_token=None)
