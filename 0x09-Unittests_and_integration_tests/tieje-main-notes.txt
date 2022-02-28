@@ -1,0 +1,25 @@
+2/28/2022
+
+Rate of 3 problems per day.
+
+https://github.com/wolever/parameterized
+pip install parameterized
+
+https://en.wikipedia.org/wiki/Memoization
+
+Mock
+https://docs.python.org/3/library/unittest.mock.html
+https://stackoverflow.com/questions/11836436/how-to-mock-a-readonly-property-with-mock
+https://realpython.com/python-mock-library/
+
+nose.tools
+https://nose.readthedocs.io/en/latest/testing_tools.html
+https://nose.readthedocs.io/en/latest/testing.html
+
+python -m unittest path/to/test_file.py
+
+Task 0
+
+python -m unittest test_utils.py
+https://auth0.com/blog/mocking-api-calls-in-python/
+
