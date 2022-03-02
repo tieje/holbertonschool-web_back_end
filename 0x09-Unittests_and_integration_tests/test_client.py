@@ -1,4 +1,4 @@
-#!/bin/env python3
+#!/usr/bin/env python3
 '''Test client functions'''
 import unittest
 from unittest.mock import patch, PropertyMock
@@ -7,19 +7,18 @@ from client import GithubOrgClient
 
 
 class TestGithubOrgClient(unittest.TestCase):
-    ''' self descriptive '''
-
+    '''Test GithubOrgClient method'''
     @parameterized.expand([
         ('google'),
         ('abc')
     ])
     @patch('client.get_json')
-    def test_org(self, data, mock):
-        ''' self descriptive '''
-        endpoint = 'https://api.github.com/orgs/{}'.format(data)
-        spec = GithubOrgClient(data)
-        spec.org()
-        mock.assert_called_once_with(endpoint)
+    def test_org(self, org, mock):
+        '''Test org()'''
+        url = 'https://api.github.com/orgs/{}'.format(org)
+        test = GithubOrgClient(org)
+        test.org()
+        mock.assert_called_once_with(url)
     
     def test_public_repos_url(self):
         '''Test public repos url'''
