@@ -45,8 +45,8 @@ class TestGithubOrgClient(unittest.TestCase):
             mocked_repos.assert_called_once()
 
     @parameterized.expand([
-        ({'license': {'key': "my_license"}}, "my_license", True),
-        ({"license": {"key": "other_license"}}, "my_license", False)
+        ({'license': {'key': 'my_license'}}, 'my_license', True),
+        ({'license': {'key': 'other_license'}}, 'my_license', False)
     ])
     def test_has_license(self, repo, key, expectation):
         '''self descriptive'''
@@ -57,7 +57,7 @@ class TestGithubOrgClient(unittest.TestCase):
 @parameterized_class(['org_payload', 'repos_payload',
                       'expected_repos', 'apache2_repos'], TEST_PAYLOAD)
 class TestIntegrationGithubOrgClient(unittest.TestCase):
-    """Integration test"""
+    '''Integration test'''
     @classmethod
     def setUpClass(cls):
         cls.get_patcher = patch('requests.get', side_effect=[
