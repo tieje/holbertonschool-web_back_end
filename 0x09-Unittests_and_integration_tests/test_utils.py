@@ -2,13 +2,12 @@
 '''Test utils functions'''
 from typing import Dict, Mapping, Sequence
 import unittest
-import requests
 from unittest.mock import Mock
 from unittest.mock import patch
 from parameterized import parameterized
 from nose.tools import assert_equal, raises
 
-from utils import access_nested_map, get_json
+from utils import access_nested_map, get_json, memoize
 
 
 class TestAccessNestedMap(unittest.TestCase):
@@ -51,3 +50,26 @@ class TestGetJson(unittest.TestCase):
             response: Dict = get_json(test_url)
             mock_request.json.assert_called_once()
         assert_equal(response, test_payload)
+
+
+class TestMemoize(unittest.TestCase):
+    '''Test memoize method'''
+
+    def test_memoize(self):
+        '''Test memoize'''
+        class TestClass:
+            '''Test class'''
+
+            def a_method(self):
+                '''test method'''
+                return 42
+
+            @memoize
+            def a_property(self):
+                '''check memoization'''
+                return self.a_method()
+        with patch.object(TestClass, 'a_method') as mock:
+            test_class = TestClass()
+            test_class.a_property
+            test_class.a_property
+            mock.assert_called_once()
