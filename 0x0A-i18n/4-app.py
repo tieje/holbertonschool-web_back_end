@@ -20,6 +20,9 @@ Babel.default_timezone = 'UTC'
 @babel.localeselector
 def get_locale():
     '''Get locale from request'''
+    locale = request.args.get("locale")
+    if locale:
+        return locale
     return request.accept_languages.best_match(Config.LANGUAGES)
 
 
