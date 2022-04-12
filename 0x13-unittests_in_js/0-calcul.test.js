@@ -1,7 +1,6 @@
 const assert = require("assert");
 const calculateNumber = require("./0-calcul.js");
 
-//copy from https://github.com/agzsoftsi/holbertonschool-web_back_end/blob/main/0x13-unittests_in_js/0-calcul.test.js
 describe("calculateNumber", () => {
   it("should return sum of integers", () => {
     assert.strictEqual(calculateNumber(1, 3), 4);
